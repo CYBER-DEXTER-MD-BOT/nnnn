@@ -28,9 +28,15 @@
         });
 
         function extractVideoId(url) {
-            const regex = /(?:https?:\/\/(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|\S+\/\S+\/?|\S+))?v=|youtu\.be\/)([\w-]{11})/;
+            const regex = /(?:https?:\/\/(?:www\.)?youtu\.be\/|(?:https?:\/\/(?:www\.)?youtube\.com\/(?:[^\/\n\s]+\/\S+\/|\S+\/\S+\/?v=)))([\w-]{11})(?:\?[\s\S]*)?/;
             const match = url.match(regex);
-            return match ? match[1] : null;
+            if (match) {
+                console.log("Extracted Video ID: ", match[1]);
+                return match[1];
+            } else {
+                console.log("Failed to extract Video ID from URL: ", url);
+                return null;
+            }
         }
 
         function fetchVideoDetails(videoId) {
@@ -40,6 +46,7 @@
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
+                    console.log("API Response: ", data);  // Log the full API response
                     if (data.items && data.items.length > 0) {
                         const video = data.items[0];
                         const title = video.snippet.title;
@@ -51,7 +58,6 @@
                             <button onclick="downloadAudio('${videoId}')">Download Audio</button>
                         `;
                     } else {
-                        console.log("Video not found:", data);
                         alert("Video not found!");
                     }
                 })
