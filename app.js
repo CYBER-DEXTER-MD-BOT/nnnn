@@ -17,7 +17,7 @@ function extractVideoId(url) {
 }
 
 function fetchVideoDetails(videoId) {
-    const apiKey = "YOUR_YOUTUBE_API_KEY"; // Replace with your YouTube API Key
+    const apiKey = "AIzaSyCMaxHj34zs_wdIEJPXX6hwR0Q2_RDCxCw"; // Replace with your YouTube API Key
     const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet,contentDetails`;
 
     fetch(apiUrl)
